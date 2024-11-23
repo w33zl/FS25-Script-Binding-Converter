@@ -48,6 +48,12 @@ def generate_lua_function(function_element):
         if SUBSTITUE_FLOAT and param_type == "float":
             param_type = "number"
         
+        # check if value ends with ?
+        is_optional = param_type.endswith("?")
+        if is_optional:
+            # add "|nil" to the end of the type
+            param_type = param_type[:-1] + "|nil"
+
         param_desc = process_description(param.get("desc"))
         param_doc = f'---@param {param_name} {param_type}'
         if param_desc:
