@@ -5,6 +5,9 @@ import re
 import os
 import xml.etree.ElementTree as ET
 
+SUBSTITUE_FLOAT = True
+
+
 def sanitize_variable_name(name):
     # Replace invalid characters with underscores
     # TODO Maybe just remove all invalid characters?
@@ -41,6 +44,10 @@ def generate_lua_function(function_element):
             
         param_name = sanitize_variable_name(param_name)
         param_type = param.get("type")
+
+        if SUBSTITUE_FLOAT and param_type == "float":
+            param_type = "number"
+        
         param_desc = process_description(param.get("desc"))
         param_doc = f'---@param {param_name} {param_type}'
         if param_desc:
