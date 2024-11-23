@@ -3,6 +3,7 @@ VERSION = "1.1.0"
 
 import re
 import os
+import sys
 import xml.etree.ElementTree as ET
 
 SUBSTITUE_FLOAT = True
@@ -102,4 +103,20 @@ def convert_xml_to_lua(xml_file_path, lua_file_path):
         f.write(lua_code)
 
 if __name__ == "__main__":
-    convert_xml_to_lua("scriptBinding.xml", "scriptBinding.lua")
+    # check if first argument is a file path, if not, use default path
+    input_file = "scriptBinding.xml"
+    output_file = "scriptBinding.lua"
+
+    if len(sys.argv) > 1:
+        # check if second argument is a file path, use that for the lua output file, othwerwise use default
+        input_file = sys.argv[1]
+        if len(sys.argv) > 2:
+            output_file = sys.argv[2]
+            # convert_xml_to_lua(sys.argv[1], sys.argv[2])
+        else:
+            output_file = sys.argv[1].replace(".xml", ".lua")
+            # convert_xml_to_lua(sys.argv[1], sys.argv[1].replace(".xml", ".lua"))
+    # else:
+    #     convert_xml_to_lua("scriptBinding.xml", "scriptBinding.lua")
+
+    convert_xml_to_lua(input_file, output_file)
