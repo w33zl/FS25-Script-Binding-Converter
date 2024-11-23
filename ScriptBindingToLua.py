@@ -49,10 +49,10 @@ def generate_lua_function(function_element):
         if SUBSTITUE_FLOAT and param_type == "float":
             param_type = "number"
         
-        # check if value ends with ?
+        # check if value ends with ? (means optional)
         is_optional = param_type.endswith("?")
         if is_optional:
-            # add "|nil" to the end of the type
+            # add "|nil" to the end of the type to make it optional
             param_type = param_type[:-1] + "|nil"
 
         param_desc = process_description(param.get("desc"))
@@ -90,16 +90,21 @@ def convert_xml_to_lua(xml_file_path, lua_file_path):
 
     with open(lua_file_path, "w") as f:
         # print header with script name and VERSION to the file
-        f.write(f"-- ScriptBindingToLua v{VERSION} (by w33zl) - Converts a scriptBinding.xml file to a Lua file with LuaDoc annotation suitable fopr suggestions/type ahead in VS Code\n\n")
+        f.write(f"--[[\n\nScriptBindingToLua v{VERSION} - Converts a scriptBinding.xml file to a Lua file with LuaDoc annotation suitable fopr suggestions/type ahead in VS Code\n\n")
+        f.write(f"Author: w33zl / WZL Modding\n")
+        f.write(f"GitHub: github.com/w33zl/FS25-Script-Binding-Converter\n\n")
 
         # check if a file name VERSION exists in the user's \Documents\My Games\FarmingSimulator2025\ folder, and if exists, print text with "Game version: " and the content of the VERSION file
         try:
             with open(f"{os.environ['USERPROFILE']}\\Documents\\My Games\\FarmingSimulator2025\\VERSION", "r") as version_file:
                 version = version_file.read().strip()
-                f.write(f"-- Game version: {version}\n\n")
+                f.write(f"Game version: {version}\n\n")
         except FileNotFoundError:
-            f.write("-- Game version: Not found\n\n")
+            f.write("Game version: Not found\n\n")
 
+        f.write("]]\n\n")
+
+        # write the lua code to the file
         f.write(lua_code)
 
 if __name__ == "__main__":
