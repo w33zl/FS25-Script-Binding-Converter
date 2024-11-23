@@ -11,7 +11,7 @@ Converts a scriptBinding.xml file to a Lua file with LuaDoc annotation suitable 
 
 
 ### Float to Number conversion
-Currently, all float types is converted to number to avoid warnings in the language server. This can be disabled by changing `SUBSTITUE_FLOAT` to `False`:
+Currently, all `float` types are converted to `number` to avoid warnings in the Lua language server. This can be disabled by changing `SUBSTITUE_FLOAT` to `False`:
 ```py
 SUBSTITUE_FLOAT = False
 ```
