@@ -2,6 +2,7 @@
 VERSION = "1.1.0"
 
 import re
+import os
 import xml.etree.ElementTree as ET
 
 def sanitize_variable_name(name):
@@ -76,6 +77,15 @@ def convert_xml_to_lua(xml_file_path, lua_file_path):
     with open(lua_file_path, "w") as f:
         # print header with script name and VERSION to the file
         f.write(f"-- ScriptBindingToLua v{VERSION} (by w33zl) - Converts a scriptBinding.xml file to a Lua file with LuaDoc annotation suitable fopr suggestions/type ahead in VS Code\n\n")
+
+        # check if a file name VERSION exists in the user's \Documents\My Games\FarmingSimulator2025\ folder, and if exists, print text with "Game version: " and the content of the VERSION file
+        try:
+            with open(f"{os.environ['USERPROFILE']}\\Documents\\My Games\\FarmingSimulator2025\\VERSION", "r") as version_file:
+                version = version_file.read().strip()
+                f.write(f"-- Game version: {version}\n\n")
+        except FileNotFoundError:
+            f.write("-- Game version: Not found\n\n")
+
         f.write(lua_code)
 
 if __name__ == "__main__":
