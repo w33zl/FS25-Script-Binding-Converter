@@ -1,4 +1,5 @@
 # ScriptBinding to Lua (by w33zl) - Converts a scriptBinding.xml file to a Lua file with LuaDoc annotation suitable fopr suggestions/type ahead in VS Code
+VERSION = "1.1.0"
 
 import re
 import xml.etree.ElementTree as ET
@@ -73,6 +74,8 @@ def convert_xml_to_lua(xml_file_path, lua_file_path):
         lua_code += generate_lua_function(function_element)
 
     with open(lua_file_path, "w") as f:
+        # print header with script name and VERSION to the file
+        f.write(f"-- ScriptBindingToLua v{VERSION} (by w33zl) - Converts a scriptBinding.xml file to a Lua file with LuaDoc annotation suitable fopr suggestions/type ahead in VS Code\n\n")
         f.write(lua_code)
 
 if __name__ == "__main__":
