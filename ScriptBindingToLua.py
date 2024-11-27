@@ -1,5 +1,5 @@
 # ScriptBinding to Lua (by w33zl) - Converts a scriptBinding.xml file to a Lua file with LuaDoc annotation suitable fopr suggestions/type ahead in VS Code
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
 import re
 import os
@@ -70,7 +70,9 @@ def generate_lua_function(function_element):
         if return_name:
             return_name = f"{return_name} "
 
-        lua_return = f'---@return {return_name}{return_type}'
+        # lua_return = f'---@return {return_name}{return_type}'
+        # lua_return = f'---@return {return_type}' # Skip redundant return name
+        lua_return = f'---@return {return_type} {return_type}' # Replace return name, which causes issues, with a duplicate return type. Maybe a bit hacky, but seems to work.
         if return_desc:
             lua_return += f' "{return_desc}"'
         lua_params.append(lua_return)
