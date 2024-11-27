@@ -104,6 +104,11 @@ def convert_xml_to_lua(xml_file_path, lua_file_path):
 
         f.write("]]\n\n")
 
+        # Add aliases before code
+        f.write("---@alias entityId number\n")
+        f.write("---@alias float number\n")
+        f.write("\n")
+
         # write the lua code to the file
         f.write(lua_code)
 
