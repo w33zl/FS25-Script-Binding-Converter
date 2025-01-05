@@ -2,6 +2,8 @@
 
 Converts a scriptBinding.xml file to a Lua file with LuaDoc annotation suitable fopr suggestions/type ahead in VS Code
 
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/w33zl/FS25-Script-Binding-Converter/total)
+
 ## Usage
 `python ScriptBindingToLua.py [input_file] [output_file]`
 
